@@ -19,6 +19,7 @@ They are transport agnostic, and protocol agnostic. You can run them rest over h
 
 An api is a set of functions. each function has a name, a secuirty role that can access it, and optionally a set of parameter validations.
 
+the simplest way to call the api is with a method name, and an array of parameters:
 
 ```
 var example_api = new api_class();
@@ -33,6 +34,8 @@ example_api.public("hello", function(callback, name, age){
 // recv: { error: null, result: ["Hello kendrick, you're 30 years old.", 40] }
 ```
 
+if the api supports named parameters, you can make prettier requests:
+
 ```
 var example_api = new api_class();
 
@@ -45,6 +48,23 @@ example_api.public("hello_named_parameters", function(callback, name, age){
 // post { method: "example.hello_named_parameters", name: "kendrick", age: 30 }
 // recv: { error: null, params: ['message', 'age_plus_ten'], message: "Hello kendrick, you're 30 years old.", age_plus_ten: 40 }
 ```
+
+you can fake named parameters if the api you're consuming doesn't support them, by adding a map_params array in your request.
+
+```
+var example_api = new api_class();
+
+example_api.public("hello_named_parameters", function(callback, name, age){
+
+    callback(null, "Hello " + name + ", you're " + age + " years old.", age + 10);
+
+}).expects('string', 'number').callback('message', 'age_plus_ten');
+
+// post { method: "example.hello_named_parameters", name: "kendrick", age: 30, map_params: ['name', 'age'] }
+// recv: { error: null, params: ['message', 'age_plus_ten'], message: "Hello kendrick, you're 30 years old.", age_plus_ten: 40 }
+```
+
+
 
 **Serving an API**
 
