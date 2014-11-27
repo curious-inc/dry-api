@@ -74,11 +74,11 @@ These API's are transport agnostic, and protocol agnostic. You can run them rest
 ```
 var server = express();
 
-var api_manager = new api_manager_class(api_manger.http(server, "/api"), api_manager.json_rpc());
+var manager = new manager_class(api_manger.http(server, "/api"), api_manager.json_rpc());
 
-api_manager.api("example", example_api);
+manager.api("example", example_api);
 
-api_manager.mount();
+manager.mount();
 
 server.listen(8000);
 ```
