@@ -31,7 +31,7 @@ example_api.public("hello", function(callback, name, age){
 }).expects('string', 'number');
 
 // post: { method: "example.hello_named_parameters", params: ["kendrick", 30] }
-// recv: { error: null, result: ["Hello kendrick, you're 30 years old.", 40] }
+// recv: { params: [null, "Hello kendrick, you're 30 years old.", 40] }
 ```
 
 if the api supports named parameters, you can make prettier requests:
@@ -46,7 +46,8 @@ example_api.public("hello_named_parameters", function(callback, name, age){
 }).expects('string', 'number').parameters('name', 'age').callback('message', 'age_plus_ten');
 
 // post { method: "example.hello_named_parameters", name: "kendrick", age: 30 }
-// recv: { error: null, params: ['message', 'age_plus_ten'], message: "Hello kendrick, you're 30 years old.", age_plus_ten: 40 }
+// error shown for clarity, but if there isn't one we don't send it
+// recv: { /* error: null, */ params_map: ['error', 'message', 'age_plus_ten'], message: "Hello kendrick, you're 30 years old.", age_plus_ten: 40 }
 ```
 
 you can fake named parameters if the api you're consuming doesn't support them, by adding a map_params array in your request.
@@ -60,8 +61,8 @@ example_api.public("hello_named_parameters", function(callback, name, age){
 
 }).expects('string', 'number').callback('message', 'age_plus_ten');
 
-// post { method: "example.hello_named_parameters", name: "kendrick", age: 30, map_params: ['name', 'age'] }
-// recv: { error: null, params: ['message', 'age_plus_ten'], message: "Hello kendrick, you're 30 years old.", age_plus_ten: 40 }
+// post { method: "example.hello_named_parameters", name: "kendrick", age: 30, params_map: ['name', 'age'] }
+// recv: { params_map: ['error', 'message', 'age_plus_ten'], message: "Hello kendrick, you're 30 years old.", age_plus_ten: 40 }
 ```
 
 
