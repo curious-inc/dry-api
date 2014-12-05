@@ -65,6 +65,9 @@ example_api.public("hello_named_parameters", function(callback, name, age){
 // recv: { params_map: ['error', 'message', 'age_plus_ten'], message: "Hello kendrick, you're 30 years old.", age_plus_ten: 40 }
 ```
 
+A request and reply should either have a params array, or a params_map, never both. 
+A malformed reply may have both, but a params array will always take prescedence.
+A malformed request may have both, but a params array always will take prescedence.
 
 
 **Serving an API**

@@ -25,5 +25,6 @@
     "dependencies": {
          "tamejs" : ""
         ,"dry-underscore" : ""
+        ,"dry-request" : ""
     }
 }
