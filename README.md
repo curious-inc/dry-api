@@ -1,3 +1,9 @@
+# Documentation TODO
+*smart_client format changed*
+*whitelisting errors*
+*make sure context function is correct*
+*local clients (include maxSockets info)*
+*require('http').globalAgent.maxSockets = 200;*
 
 # dry: core api
 
@@ -192,7 +198,7 @@ api.example.hello("kendrick", "30", function(err, message, age_plus_one){
 
 ```
 
-# THIS IS WHERE I STOPPED
+# Documentation past this point it not up to date. Some of it is close.
 
 ## Serving an API
 
