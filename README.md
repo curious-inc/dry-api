@@ -5,6 +5,7 @@
 *local clients (include maxSockets info)*
 *require('http').globalAgent.maxSockets = 200;*
 
+
 # dry: core api
 
 ## Installing
@@ -377,7 +378,7 @@ I'm assuming you have session enabled, and you're storing the current users user
 api_manager.context(function(next, context){
 
     var user_id = null;
-    if(req.session && req.session.user_id){
+    if(this.req.session && this.req.session.user_id){
         user_id = req.session.user_id;
     }
 
@@ -440,7 +441,7 @@ example_api.public("hello", function(callback, name, age){
 
 }).expects('string', 'number');
 
-// post: { method: "example.hello_named_parameters", params: ["kendrick", 30] }
+// post: { method: "example.hello_named_parameters", params: ["0", "1"], "0": "kendrick", "1": 30 }
 // recv: { params: [null, "Hello kendrick, you're 30 years old.", 40] }
 ```
 
