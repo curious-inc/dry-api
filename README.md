@@ -22,6 +22,12 @@ This package provides the core api libraries for the dry framework. Dry api's ar
 
 They are transport agnostic, and protocol agnostic. You can run them REST over HTTP, you can run JsonRPC over TCP or HTTP.
 
+## Clients
+
+JavaScript: the client runs both browser side, and node side, with identical semantics.
+
+Swift Client: included in the `clients/swift` folder. You can see the whole repo/docs at: <https://github.com/curious-inc/dry-api-swift>
+
 ## The look
 
 ```
@@ -50,8 +56,8 @@ client.example_api().hello_messages("Kendrick", 30, function(err, name_message_r
 
 // iOS side
 
-client.example_api().hello_messages("Kendrick", 30, { (err, name_message_response, age_message_response) in
-    if(err){ throw(err); }
+client.call("example_api.hello_messages", "Kendrick", 30, { (err, name_message_response: String?, age_message_response: String?) in
+    if(err){ return println("\(err)"); }
 
     println(name_message_response); // "Hello Kendrick."
     println(age_message_response); // "You're 30 years old."
