@@ -12,6 +12,7 @@ function library(){
     _.hook(client.prototype);
 
     client.prototype.url = _.rw("_url");
+    client.prototype.remove_tag = function(key){ delete this._tags[key]; };
     client.prototype.tags = function(key, val){
         if(_.undef(key) && _.undef(val)){
             return(_.clone(this._tags));
