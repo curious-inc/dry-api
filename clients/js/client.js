@@ -3,16 +3,25 @@ var _ = require('dry-underscore');
 
 function library(){
 
-    function client(url, access_token){
+    function client(url){
         this._url = url || null;
-        this._access_token = access_token || null;
+        this._tags = {};
         this._errors = _.errors();
     };
     
     _.hook(client.prototype);
 
     client.prototype.url = _.rw("_url");
-    client.prototype.access_token = _.rw("_access_token");
+    client.prototype.tags = function(key, val){
+        if(_.undef(key) && _.undef(val)){
+            return(_.clone(this._tags));
+        }else if(_.undef(val)){
+            return(this._tags[key]);
+        }else{
+            this._tags[key] = val;
+            return(this);
+        }
+    };
 
     client.prototype.log = _.r("_log"); 
     client.prototype._log = _.log.child("rpc.client");
@@ -26,11 +35,10 @@ function library(){
         this.errors().add("malformed_reply", "malformed reply.");
     };
 
-
-    client.prototype.request = function(method, access_token, params){
+    client.prototype.request = function(method, tags, params){
         var request = {
             "method" : method,
-            "access_token": access_token || null
+            "tags" : tags,
         };
 
         if(_.isArray(params)){ 
@@ -41,7 +49,7 @@ function library(){
             });
             request.params = params_map;
         }else if(_.isObject(params)){ 
-            _.extend(request, params, request);
+            request = _.extend({}, params, request);
         }
 
        return(request);
@@ -55,7 +63,7 @@ function library(){
         params = params || {};
         callback = callback || _.noop;
     
-        var req = self.request(method_name, self.access_token(), params);
+        var req = self.request(method_name, self.tags(), params);
 
         self.bite("prepare_request", [req], function(err){
             if(err){ return callback(err); }
@@ -89,7 +97,7 @@ function library(){
                     }
                     self.log().debug("arguments after prepare_arguments:", result);
 
-                    var context = { access_token: self.access_token() };
+                    var context = {};
 
                     var params = [];
                     if(result.params){
@@ -113,14 +121,26 @@ function library(){
         this.configure(hash);
     }
 
-    smart_client.prototype.access_token = function(at){
-        if(at){ 
+    smart_client.prototype.tags = function(key, val){
+        if(key && val){ 
             this._client.access_token(at);
             return(this);
         }else{
             return(this._client.access_token());
         }
     };
+
+    smart_client.prototype.tags = function(key, val){
+        if(_.undef(key) && _.undef(val)){
+            return(this._client.tags(key, val));
+        }else if(_.undef(val)){
+            return(this._client.tags(key));
+        }else{
+            this._client.tags(key, val);
+            return(this);
+        }
+    };
+
 
     smart_client.prototype.configure = function(hash){
         var self = this;
