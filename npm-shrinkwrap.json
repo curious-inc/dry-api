@@ -1,10 +1,10 @@
 {
   "name": "dry-api",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "dependencies": {
     "dry-underscore": {
-      "version": "0.11.1",
-      "from": "dry-underscore@0.11.1",
+      "version": "0.11.2",
+      "from": "dry-underscore@0.11.2",
       "dependencies": {
         "formidable": {
           "version": "1.0.9",
@@ -35,7 +35,7 @@
         },
         "moment": {
           "version": "2.5.1",
-          "from": "moment@2.5.1",
+          "from": "https://registry.npmjs.org/moment/-/moment-2.5.1.tgz",
           "resolved": "https://registry.npmjs.org/moment/-/moment-2.5.1.tgz"
         },
         "handlebars": {
