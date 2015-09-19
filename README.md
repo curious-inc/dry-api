@@ -26,7 +26,7 @@ They are transport agnostic, and protocol agnostic. You can run them REST over H
 
 JavaScript: the client runs both browser side, and node side, with identical semantics.
 
-Swift Client: included in the `clients/swift` folder. You can see the whole repo/docs at: <https://github.com/curious-inc/dry-api-swift>
+Swift Client: <https://github.com/curious-inc/dry-api-swift>
 
 ## The look
 
